@@ -8,6 +8,7 @@ class System {
     triesElement = document.getElementById('tries');
     startTextElement = document.getElementById('startText');
     failTextElement = document.getElementById('failText');
+    successTextElement = document.getElementById('successText');
     overTextElement = document.getElementById('overText');
     startBtnElement = document.getElementById('startBtn');
     restartBtnElement = document.getElementById('restartBtn');
@@ -17,7 +18,7 @@ class System {
         this.#count = ATTEMPTS;
         this.triesElement.innerText = this.#count;
         makeElementVisible(this.startTextElement);
-        this.startBtnElement.addEventListener('click', this.#start);
+        this.startBtnElement.addEventListener("click", this.#start);
         this.restartBtnElement.addEventListener('click', this.#restart);
     }
 
@@ -29,6 +30,13 @@ class System {
     #gameStart = async () => {
         this.#decreaseCount();
         const result = await new Game();
+        
+        if (result) {
+            makeElementVisible(this.successTextElement);
+        } else {
+            if (this.#count > 0) makeElementVisible(this.failTextElement);
+            else makeElementVisible(this.overTextElement);
+        }
     }
 
     #start = () => {

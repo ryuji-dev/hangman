@@ -1,5 +1,5 @@
 export const ATTEMPTS = 7;
-export const TIME = 60;
+export const TIME_LIMIT = 60;
 
 export const ANSWERS = [
     'Elice',
@@ -26,4 +26,4 @@ export const ANSWERS = [
     'Constructor',
     'Extends',
     'Iterable',
-].map((answer) => answer.toUpperCase())
+].map((answer) => answer.toUpperCase());
