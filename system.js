@@ -1,6 +1,7 @@
 import { ATTEMPTS } from './constants.js';
 import { makeElementVisible, makeElementInvisible } from './utils.js';
 import Game from './game.js';
+import { playBackgroundSound, playLoseSound, playWindSound, stopBackgroundSound } from './sound.js';
 
 class System {
     #count;
@@ -30,10 +31,14 @@ class System {
     #gameStart = async () => {
         this.#decreaseCount();
         const result = await new Game();
+
+        stopBackgroundSound();
         
         if (result) {
+            playWindSound();
             makeElementVisible(this.successTextElement);
         } else {
+            playLoseSound();
             if (this.#count > 0) makeElementVisible(this.failTextElement);
             else makeElementVisible(this.overTextElement);
         }
@@ -41,11 +46,13 @@ class System {
 
     #start = () => {
         makeElementInvisible(this.startTextElement);
+        playBackgroundSound();
         this.#gameStart();
     }
 
     #restart = () => {
         makeElementInvisible(this.failTextElement);
+        playBackgroundSound();
         this.#gameStart();
     }
 

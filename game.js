@@ -1,4 +1,5 @@
 import { ANSWERS, TIME_LIMIT } from './constants.js';
+import { playFailSound, playSuccessSound } from './sound.js';
 import { makeElementInvisible, makeElementVisible } from './utils.js';
 
 class Game {
@@ -50,9 +51,11 @@ class Game {
         e.removeEventListener('click', () => this.#clickAlphabet(e, resolve));
 
         if (this.#answer.includes(e.innerText)) {
+            playSuccessSound();
             this.#updateProblemText(e.innerText);
             if (this.#problemText == this.#answer) resolve(true);
         } else {
+            playFailSound();
             if (this.#currentStage < this.hangmanElements.length - 1) this.#nextStage();
             else resolve(false);
         }
